@@ -14,7 +14,10 @@ describe Savon::WSDL do
 
     it "should allow its endpoint to be overridden" do
       @wsdl.soap_endpoint = "http://your/face"
-      @wsdl.soap_endpoint.should == "http://your/face"
+      @wsdl.soap_endpoint.should == URI("http://your/face")
+
+      @wsdl.soap_endpoint = URI("http://your/mom")
+      @wsdl.soap_endpoint.should == URI("http://your/mom")
     end
 
     it "has a getter for the namespace URI" do
