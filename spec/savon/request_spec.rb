@@ -71,8 +71,8 @@ describe Savon::Request do
   it "retrieves the WSDL document and returns the Net::HTTP response" do
     wsdl_response = @request.wsdl
 
-    wsdl_response.should be_a(Net::HTTPResponse)
-    wsdl_response.body.should == WSDLFixture.authentication
+    wsdl_response.should be_a(String)
+    wsdl_response.should == WSDLFixture.authentication
   end
 
   it "executes a SOAP request and returns the Net::HTTP response" do

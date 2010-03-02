@@ -12,6 +12,11 @@ describe Savon::WSDL do
       @wsdl.enabled?.should be_true
     end
 
+    it "should allow its endpoint to be overridden" do
+      @wsdl.soap_endpoint = "http://your/face"
+      @wsdl.soap_endpoint.should == "http://your/face"
+    end
+
     it "has a getter for the namespace URI" do
       @wsdl.namespace_uri.should == WSDLFixture.authentication(:namespace_uri)
     end

@@ -14,6 +14,7 @@ require "net/https"
 require "base64"
 require "digest/sha1"
 require "rexml/document"
+require "open-uri"
 
 # gem dependencies
 require "builder"

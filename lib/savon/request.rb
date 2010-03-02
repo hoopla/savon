@@ -78,9 +78,7 @@ module Savon
     # Retrieves WSDL document and returns the Net::HTTP response.
     def wsdl
       log "Retrieving WSDL from: #{@endpoint}"
-      http.endpoint @endpoint.host, @endpoint.port
-      http.use_ssl = @endpoint.ssl?
-      http.start { |h| h.request request(:wsdl) }
+      Kernel.open(@endpoint.to_s)
     end
 
     # Executes a SOAP request using a given Savon::SOAP instance and

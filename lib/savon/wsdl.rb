@@ -13,6 +13,9 @@ module Savon
     # Sets whether to use the WSDL.
     attr_writer :enabled
 
+    # Overrides the wsdl's endpoint
+    attr_writer :soap_endpoint
+
     # Returns whether to use the WSDL. Defaults to +true+.
     def enabled?
       @enabled
@@ -54,7 +57,7 @@ module Savon
 
     # Returns the raw WSDL document.
     def to_s
-      @document ||= @request.wsdl.body
+      @document ||= @request.wsdl
     end
 
   private
