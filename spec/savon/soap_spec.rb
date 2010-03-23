@@ -137,8 +137,11 @@ describe Savon::SOAP do
     it "should merge global and per request headers defined as Hashes" do
       Savon::SOAP.header = { :key => "value", :key2 => "global value" }
       @soap.header[:key2] = "request value"
-      @soap.to_xml.should include(
-        "<env:Header><key>value</key><key2>request value</key2></env:Header>"
+      @soap.to_xml.should match(
+        %r|<env:Header>.*<key>value</key>.*</env:Header>|
+      )
+      @soap.to_xml.should match(
+        %r|<env:Header>.*<key2>request value</key2>.*</env:Header>|
       )
     end
 
