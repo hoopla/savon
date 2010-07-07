@@ -49,7 +49,7 @@ describe Savon::SOAP do
       @namespace = { "xmlns:ns" => "http://example.com" }
       @namespace_string = 'xmlns:ns="http://example.com"'
       @namespaces = { "xmlns:ns" => "http://ns.example.com", "xmlns:ns2" => "http://ns2.example.com" }
-      
+
       # reset to defaults
       Savon::SOAP.version = 1
       Savon::SOAP.header = {}
@@ -138,17 +138,14 @@ describe Savon::SOAP do
       Savon::SOAP.header = { :key => "value", :key2 => "global value" }
       @soap.header[:key2] = "request value"
       @soap.to_xml.should match(
-        %r|<env:Header>.*<key>value</key>.*</env:Header>|
-      )
-      @soap.to_xml.should match(
-        %r|<env:Header>.*<key2>request value</key2>.*</env:Header>|
+        /<env:Header>(<key>value<\/key><key2>request value<\/key2>|<key2>request value<\/key2><key>value<\/key>)<\/env:Header>/
       )
     end
 
     it "should use the :header method from a given WSSE object to include a WSSE header" do
       wsse = "some compliant object"
       wsse.stubs(:header).returns("<wsse>authentication</wsse>")
-      
+
       @soap.wsse = wsse
       @soap.to_xml.should include("<env:Header><wsse>authentication</wsse></env:Header>")
     end
@@ -198,7 +195,8 @@ describe Savon::SOAP do
         '<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">' <<
           '<env:Body><wsdl:authenticate></wsdl:authenticate></env:Body>' <<
         '</env:Envelope>'
-      ) 
+      )
     end
   end
 end
+

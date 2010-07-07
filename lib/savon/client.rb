@@ -27,6 +27,19 @@ module Savon
   #
   #   client = Savon::Client.new "http://example.com/UserService?wsdl", :proxy => "http://proxy.example.com"
   #
+  # == Forcing a particular SOAP endpoint
+  #
+  # In case you don't want to use the SOAP endpoint specified in the WSDL, you can tell Savon to use
+  # another SOAP endpoint.
+  #
+  #   client = Savon::Client.new "http://example.com/UserService?wsdl", :soap_endpoint => "http://localhost/UserService"
+  #
+  # == Gzipped SOAP requests
+  #
+  # Sending gzipped SOAP requests can be specified per client instance.
+  #
+  #   client = Savon::Client.new "http://example.com/UserService?wsdl", :gzip => true
+  #
   # == Savon::WSDL
   #
   # You can access Savon::WSDL via:
@@ -40,11 +53,17 @@ module Savon
   #   client.request
   class Client
 
-    # Expects a SOAP +endpoint+ string. Also accepts an optional hash of +options+ for specifying
-    # a +:proxy+ server to use.
+    # Expects a SOAP +endpoint+ string. Also accepts a Hash of +options+.
+    #
+    # ==== Options:
+    #
+    # [proxy]  the proxy server to use
+    # [gzip]  whether to gzip SOAP requests
+    # [soap_endpoint]  force to use this SOAP endpoint
     def initialize(endpoint, options = {})
+      soap_endpoint = options.delete(:soap_endpoint)
       @request = Request.new endpoint, options
-      @wsdl = WSDL.new @request
+      @wsdl = WSDL.new @request, soap_endpoint
     end
 
     # Returns the Savon::WSDL.

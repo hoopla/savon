@@ -5,4 +5,5 @@ doc
 coverage
 .loadpath
 .project
+*~
 *.gem
